@@ -22,31 +22,26 @@ const navItems = [
     href: '/admin/inventario',
     label: 'Stock Central',
     icon: Package,
-    description: 'RF-INV-03',
   },
   {
     href: '/admin/inventario/kardex',
     label: 'Kardex',
     icon: BookOpen,
-    description: 'RF-INV-06',
   },
   {
     href: '/admin/recepcion',
     label: 'Recepción',
     icon: PackageCheck,
-    description: 'RF-REC-06',
   },
   {
     href: '/admin/despacho',
     label: 'Despachos',
     icon: PackageMinus,
-    description: 'RF-DES-03',
   },
   {
     href: '/admin/ajustes',
     label: 'Conteos y Ajustes',
     icon: Scale,
-    description: 'RF-INV-08',
   },
 ];
 
@@ -67,7 +62,7 @@ export default function AdminSidebar({ session }: { session: AuthSession }) {
           <LayoutDashboard className="w-4 h-4 text-slate-900" />
         </div>
         <div>
-          <p className="text-white font-black text-sm tracking-tight">MBW STORE</p>
+          <p className="text-white font-black text-sm tracking-tight">FUTURE VISION</p>
           <p className="text-slate-400 text-[10px] uppercase tracking-widest">Almacén</p>
         </div>
       </div>
@@ -100,7 +95,6 @@ export default function AdminSidebar({ session }: { session: AuthSession }) {
                   {item.label}
                 </p>
                 <p className={`text-[10px] ${isActive ? 'text-slate-500' : 'text-slate-600'}`}>
-                  {item.description}
                 </p>
               </div>
               {isActive && <ChevronRight className="w-3 h-3 text-slate-400 shrink-0" />}
