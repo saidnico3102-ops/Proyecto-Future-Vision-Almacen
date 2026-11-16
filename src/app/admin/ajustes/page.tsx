@@ -106,7 +106,6 @@ export default function AjustesPage() {
       {/* Header */}
       <div className="px-8 pt-8 pb-6 border-b border-slate-200 bg-white">
         <h1 className="text-2xl font-black text-slate-900 tracking-tight">Conteos Físicos y Ajustes</h1>
-        <p className="text-slate-500 text-sm mt-1">RF-INV-08 · Auditoría de almacén y propuestas de ajuste</p>
       </div>
 
       <div className="flex-1 p-8 grid grid-cols-2 gap-8 overflow-auto">
