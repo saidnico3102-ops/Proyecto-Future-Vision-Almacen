@@ -22,31 +22,26 @@ const navItems = [
     href: '/admin/inventario',
     label: 'Stock Central',
     icon: Package,
-    description: 'RF-INV-03',
   },
   {
     href: '/admin/inventario/kardex',
     label: 'Kardex',
     icon: BookOpen,
-    description: 'RF-INV-06',
   },
   {
     href: '/admin/recepcion',
     label: 'Recepción',
     icon: PackageCheck,
-    description: 'RF-REC-06',
   },
   {
     href: '/admin/despacho',
     label: 'Despachos',
     icon: PackageMinus,
-    description: 'RF-DES-03',
   },
   {
     href: '/admin/ajustes',
     label: 'Conteos y Ajustes',
     icon: Scale,
-    description: 'RF-INV-08',
   },
 ];
 
