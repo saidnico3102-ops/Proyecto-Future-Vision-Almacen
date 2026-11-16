@@ -167,37 +167,32 @@ const filtered = mockProductsInventory.filter((p) => {
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-2xl font-black text-slate-900 tracking-tight">Stock Central</h1>
-        <p className="text-slate-500 text-sm mt-1">RF-INV-03 · Control de inventario en tiempo real</p>
       </div>
 
       {/* KPI Cards */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 gap-4 mb-8">
         <KpiCard
           icon={Package}
-          label="Total Pares en Stock"
+          label="Stock Total"
           value={totalStock}
-          sub="En todos los modelos"
           color="bg-blue-50 text-blue-500"
         />
         <KpiCard
           icon={AlertTriangle}
           label="Stock Bajo / Agotado"
           value={lowStockCount}
-          sub="Modelos que requieren atención"
           color="bg-amber-50 text-amber-500"
         />
         <KpiCard
           icon={DollarSign}
           label="Valorizado Total"
           value={formatCurrency(totalValue)}
-          sub="Precio de venta estimado"
           color="bg-green-50 text-green-500"
         />
         <KpiCard
           icon={Activity}
           label="Movimientos Hoy"
           value={todayMovs}
-          sub="Ingresos y salidas del día"
           color="bg-purple-50 text-purple-500"
         />
       </div>
