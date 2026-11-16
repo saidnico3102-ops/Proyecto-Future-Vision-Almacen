@@ -28,6 +28,36 @@ function StatusBadge({ status }: { status: 'EN_STOCK' | 'STOCK_BAJO' | 'AGOTADO'
   );
 }
 
+function FilterSelect({
+  label,
+  allLabel,
+  value,
+  onChange,
+  options,
+}: {
+  label: string;
+  allLabel: string;
+  value: string;
+  onChange: (value: string) => void;
+  options: { value: string; label: string }[];
+}) {
+  return (
+    <select
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      aria-label={`Filtrar por ${label}`}
+      className="px-3 py-2.5 text-sm border border-slate-200 rounded-xl bg-white text-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-900/10"
+    >
+      <option value="">{allLabel}</option>
+      {options.map((o) => (
+        <option key={o.value} value={o.value}>
+          {o.label}
+        </option>
+      ))}
+    </select>
+  );
+}
+
 function KpiCard({ icon: Icon, label, value, sub, color }: {
   icon: React.ElementType; label: string; value: string | number; sub?: string; color: string;
 }) {
@@ -142,6 +172,10 @@ function VariantModal({ product, onClose }: VariantModalProps) {
 export default function InventarioDashboard() {
   const [search, setSearch] = useState('');
   const [showLowStockOnly, setShowLowStockOnly] = useState(false);
+  const [brandFilter, setBrandFilter] = useState('');
+  const [modelFilter, setModelFilter] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState('');
+  const [sizeFilter, setSizeFilter] = useState('');
   const [selectedProduct, setSelectedProduct] = useState<InventoryProduct | null>(null);
   const { toasts, addToast, removeToast } = useToast();
 
@@ -149,6 +183,17 @@ export default function InventarioDashboard() {
   const lowStockCount = getLowStockCount(mockProductsInventory);
   const totalValue = getTotalInventoryValue(mockProductsInventory);
   const todayMovs = getTodayMovements(mockKardexMovements);
+
+  const brands = [...new Set(mockProductsInventory.map((p) => p.brand))].sort();
+  const models = [...new Set(mockProductsInventory.map((p) => p.name))].sort();
+  const categories = [
+    ...new Set(mockProductsInventory.map((p) => p.category)),
+  ].sort();
+  const sizes = [
+    ...new Set(
+      mockProductsInventory.flatMap((p) => p.variants.map((v) => v.size_us)),
+    ),
+  ].sort((a, b) => a - b);
 
 const filtered = mockProductsInventory.filter((p) => {
   const matchSearch =
@@ -159,7 +204,14 @@ const filtered = mockProductsInventory.filter((p) => {
   const status = getProductStatus(p);
   const matchLow =
     !showLowStockOnly || status === 'STOCK_BAJO' || status === 'AGOTADO';
-  return matchSearch && matchLow;
+  const matchBrand = !brandFilter || p.brand === brandFilter;
+  const matchModel = !modelFilter || p.name === modelFilter;
+  const matchCategory = !categoryFilter || p.category === categoryFilter;
+  const matchSize =
+    !sizeFilter || p.variants.some((v) => v.size_us === Number(sizeFilter));
+  return (
+    matchSearch && matchLow && matchBrand && matchModel && matchCategory && matchSize
+  );
 });
 
   return (
@@ -235,6 +287,38 @@ const filtered = mockProductsInventory.filter((p) => {
           <div className="ml-auto text-xs text-slate-400">
             {filtered.length} modelo{filtered.length !== 1 ? 's' : ''}
           </div>
+        </div>
+
+                {/* Filtros */}
+        <div className="flex flex-wrap items-center gap-3 px-5 py-4 border-b border-slate-100 bg-slate-50/50">
+          <FilterSelect
+            label="marca"
+            allLabel="Todas las marcas"
+            value={brandFilter}
+            onChange={setBrandFilter}
+            options={brands.map((b) => ({ value: b, label: b }))}
+          />
+          <FilterSelect
+            label="modelo"
+            allLabel="Todos los modelos"
+            value={modelFilter}
+            onChange={setModelFilter}
+            options={models.map((m) => ({ value: m, label: m }))}
+          />
+          <FilterSelect
+            label="categoría"
+            allLabel="Todas las categorías"
+            value={categoryFilter}
+            onChange={setCategoryFilter}
+            options={categories.map((c) => ({ value: c, label: c }))}
+          />
+          <FilterSelect
+            label="talla"
+            allLabel="Todas las tallas"
+            value={sizeFilter}
+            onChange={setSizeFilter}
+            options={sizes.map((s) => ({ value: String(s), label: `US ${s}` }))}
+          />
         </div>
 
         {/* Table */}
