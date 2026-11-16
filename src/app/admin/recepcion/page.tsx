@@ -79,7 +79,6 @@ export default function RecepcionPage() {
       {/* Header */}
       <div className="px-8 pt-8 pb-6 border-b border-slate-200 bg-white">
         <h1 className="text-2xl font-black text-slate-900 tracking-tight">Recepción de Mercadería</h1>
-        <p className="text-slate-500 text-sm mt-1">RF-REC-06 · Verificación e ingreso de productos al almacén</p>
       </div>
 
       <div className="flex flex-1 overflow-hidden">
