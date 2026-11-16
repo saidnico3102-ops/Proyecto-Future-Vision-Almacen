@@ -47,10 +47,9 @@ export default function KardexPage() {
   return (
     <div className="flex-1 p-8">
       {/* Header */}
-      <div className="flex items-start justify-between mb-8">
+      <div className="flex items-start justify-between mb-2">
         <div>
           <h1 className="text-2xl font-black text-slate-900 tracking-tight">Kardex de Inventario</h1>
-          <p className="text-slate-500 text-sm mt-1">RF-INV-06 · Trazabilidad cronológica de movimientos</p>
         </div>
         <div className="flex gap-2">
           <button
