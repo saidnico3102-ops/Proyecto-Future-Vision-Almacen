@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import type { AuthSession } from '@/types/auth';
-import { ETIQUETAS_ROL } from '@/types/auth';
+import { ETIQUETAS_ROL, type Rol } from '@/types/auth';
 import { logoutAction } from '@/app/login/actions';
 import {
   Package,
@@ -22,26 +22,32 @@ const navItems = [
     href: '/admin/inventario',
     label: 'Stock Central',
     icon: Package,
+    roles: ['administrador', 'encargado_inventario'],
   },
   {
     href: '/admin/inventario/kardex',
     label: 'Kardex',
     icon: BookOpen,
+    roles: ['administrador', 'encargado_inventario'],
+    
   },
   {
     href: '/admin/recepcion',
     label: 'Recepción',
     icon: PackageCheck,
+    roles: ['encargado_recepcion'],
   },
   {
     href: '/admin/despacho',
     label: 'Despachos',
     icon: PackageMinus,
+    roles: ['responsable_despacho'],
   },
   {
     href: '/admin/ajustes',
     label: 'Conteos y Ajustes',
     icon: Scale,
+    roles: ['administrador', 'encargado_inventario'],
   },
 ];
 
@@ -53,7 +59,11 @@ export default function AdminSidebar({ session }: { session: AuthSession }) {
     .map((part) => part[0])
     .join('')
     .toUpperCase();
-
+  
+  const visibleItems = navItems.filter((item) =>
+    item.roles.includes(session.rol),
+  );
+  
   return (
     <aside className="fixed inset-y-0 left-0 z-50 w-60 bg-slate-900 flex flex-col shadow-xl">
       {/* Logo / Brand */}
@@ -72,7 +82,7 @@ export default function AdminSidebar({ session }: { session: AuthSession }) {
         <p className="text-slate-500 text-[10px] uppercase tracking-widest font-semibold px-3 mb-3">
           Módulos
         </p>
-        {navItems.map((item) => {
+        {visibleItems.map((item) => {
           const isActive =
             item.href === '/admin/inventario'
               ? pathname === '/admin/inventario'
